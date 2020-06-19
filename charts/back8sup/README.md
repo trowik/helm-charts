@@ -2,7 +2,7 @@ back8sup
 ========
 Deploy back8sup to a Kubernetes Cluster
 
-Current chart version is `0.1.1`
+Current chart version is `0.1.2`
 
 
 **Homepage:** <https://github.com/adfinis-sygroup/back8sup>
@@ -38,6 +38,8 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | `cronjob.environment[4].value` | string | `"yaml"` |  |
 | `cronjob.environment[5].name` | string | `"DST_FOLDER"` |  |
 | `cronjob.environment[5].value` | string | `"/mnt/back8sup"` |  |
+| `cronjob.environment[6].name` | string | `"EXPIRE"` |  |
+| `cronjob.environment[6].value` | int | `30` |  |
 | `cronjob.failedJobsHistoryLimit` | string | `""` | specifies the failedJobsHistoryLimit of the cronjob |
 | `cronjob.schedule` | string | `"0 1 * * *"` | on which schedule the cronjob gets run |
 | `cronjob.successfulJobsHistoryLimit` | string | `""` | specifies the successfulJobsHistoryLimit of the cronjob |

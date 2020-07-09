@@ -1,8 +1,10 @@
 repos:
-  - repo: https://github.com/norwoodj/helm-docs
-    rev: v0.13.0
+  - repo: local
     hooks:
       - id: helm-docs
+        name: Create helm chart docs
+        language: script
+        entry: ./hack/helm-docs.sh
         args:
           - --template-file=../../hack/config/helm-docs/README.md.gotmpl
   - repo: local

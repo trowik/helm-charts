@@ -1,0 +1,22 @@
+apiVersion: v2
+name: osschallenge
+description: Chart for osschallenge application
+type: application
+version: 0.1.0
+appVersion: latest
+keywords:
+  - rmd
+  - postgresql
+home: https://github.com/trowik/osschallenge
+sources:
+  - https://github.com/trowik/osschallenge
+  - https://github.com/trowik/helm-charts/tree/master/charts/osschallenge
+maintainers:
+  - name: adfinis
+    email: support@adfinis.com
+    url: https://adfinis.com
+dependencies:
+  - name: postgresql
+    version: ~9.1.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled

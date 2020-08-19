@@ -1,0 +1,98 @@
+# Default values for osschalenge.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+osschallenge:
+  # osschalenge.replicaCount -- (int) Number of osschallenge replicas
+  replicaCount: 1
+  image:
+    # osschalenge.image.repository -- osschallenge image name
+    repository: adfinissygroup/oss-challenge
+    # osschalenge.image.tag -- Specify a tag to override which version of osschalenge to deploy.
+    # @default -- appVersion from Chart.yaml
+    tag: ~
+    # osschalenge.image.pullPolicy -- osschallenge image pull policy
+    pullPolicy: IfNotPresent
+  service:
+    # Specifiy secret for authentication.
+    # If not random token will be generated
+    # secret:
+    # osschalenge.service.name -- osschallenge service name
+    name: osschalenge
+    # osschalenge.service.type -- osschallenge service type
+    type: ClusterIP
+    # osschalenge.service.externalPort -- External Port of osschalenge service
+    externalPort: 8000
+    # osschalenge.service.internalPort -- Internal Port of osschalenge service
+    internalPort: 8000
+  # osschalenge.resources -- Resource limits for osschalenge
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #  cpu: 100m
+    #  memory: 128Mi
+    # requests:
+    #  cpu: 100m
+    #  memory: 128Mi
+  livenessProbe:
+    # osschalenge.livenessProbe.enabled -- Enable liveness probe on osschalenge
+    enabled: true
+    # osschalenge.livenessProbe.initialDelaySeconds -- Number of seconds after the container has started before liveness probe is initiated
+    initialDelaySeconds: 60
+    # osschalenge.livenessProbe.periodSeconds -- How often (in seconds) to perform the probe
+    periodSeconds: 10
+    # osschalenge.livenessProbe.timeoutSeconds -- Number of seconds after which the probe times out
+    timeoutSeconds: 5
+    # osschalenge.livenessProbe.failureThreshold -- Number of tries to perform the probe
+    failureThreshold: 6
+    # osschalenge.livenessProbe.successThreshold -- Minimum consecutive successes for the probe to be considered successful after having failed
+    successThreshold: 1
+  readinessProbe:
+    # osschalenge.readinessProbe.enabled -- Enable readiness probe on osschalenge
+    enabled: true
+    # osschalenge.readinessProbe.initialDelaySeconds -- Number of seconds after the container has started before readiness probe is initiated
+    initialDelaySeconds: 30
+    # osschalenge.readinessProbe.periodSeconds -- How often (in seconds) to perform the probe
+    periodSeconds: 10
+    # osschalenge.readinessProbe.timeoutSeconds -- Number of seconds after which the probe times out
+    timeoutSeconds: 5
+    # osschalenge.readinessProbe.failureThreshold -- Number of tries to perform the probe
+    failureThreshold: 6
+    # osschalenge.readinessProbe.successThreshold -- Minimum consecutive successes for the probe to be considered successful after having failed
+    successThreshold: 1
+  settings:
+    # django settings for osschalenge
+    # osschalenge.settings.emailHost -- Connection string of SMTP server to send mails
+    emailHost: smtp.examplexample.ch:587
+    # osschalenge.settings.emailFrom -- Default email address to use for various responses
+    emailFrom: osschallenge@osschallenge.com
+    # osschalenge.settings.serverEmail -- Email address error messages are sent from
+    serverEmail: osschallenge@osschallenge.com
+
+ingress:
+  # ingress.enabled -- Enable ingress for osschalenge
+  enabled: false
+  # ingress.annotations -- Ingress annotations
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  # ingress.hosts -- Ingress hostnames
+  hosts: ["localhost"]
+  #  - osschallenge-test.example.com
+  # ingress.tls -- Ingress TLS options
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - osschallenge-test.example.com
+
+postgresql:
+  # postgresql.enabled -- Enable PostgreSQL for persistence
+  enabled: true
+  # postgresql.postgresqlDatabase -- PostgreSQL database name
+  postgresqlDatabase: osschallenge
+  # postgresql.postgresqlUsername -- PostgreSQL user name
+  postgresqlUsername: postgres
+  # postgresql.postgresqlPassword -- Set a password for PostgreSQL
+  postgresqlPassword: ~

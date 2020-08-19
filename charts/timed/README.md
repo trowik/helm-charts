@@ -2,7 +2,7 @@ timed
 =====
 Chart for Timed application
 
-Current chart version is `0.3.13`
+Current chart version is `0.4.5`
 
 
 **Homepage:** <https://github.com/adfinis-sygroup/timed-frontend>
@@ -24,22 +24,31 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | `~8.10.14` |
+| https://charts.bitnami.com/bitnami | postgresql | `~9.1.2` |
 ## Chart Values
 
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| `auth.allowLocalLogin` | string | `"False"` | Allow local Django login |
+| `auth.oidc.adminLoginRedirectUrl` | string | `"https://example.com/admin/"` | URL of the django-admin, to which the user is redirected after successful admin login |
 | `auth.oidc.claims.email` | string | `"email"` | OIDC email claim name |
 | `auth.oidc.claims.firstname` | string | `"given_name"` | OIDC firstname claim name |
 | `auth.oidc.claims.lastname` | string | `"family_name"` | OIDC lastname claim name |
 | `auth.oidc.claims.username` | string | `"preferred_username"` | OIDC username claim name |
 | `auth.oidc.client.id` | string | `"timed"` | OIDC client id |
-| `auth.oidc.client.secret` | string | `nil` | OIDC client secret |
 | `auth.oidc.createUser` | string | `"False"` | OIDC create user in timed db if it does not already exist |
+| `auth.oidc.endPoints.auth` | string | `nil` | OIDC /auth endpoint |
+| `auth.oidc.endPoints.jwks` | string | `nil` | OIDC /certs endpoint |
+| `auth.oidc.endPoints.token` | string | `nil` | OIDC /token endpoint |
+| `auth.oidc.endPoints.userInfo` | string | `nil` | OIDC /userinfo endpoint |
+| `auth.oidc.introspect.client.id` | string | `"timed-confidential"` | OIDC introspect client id |
+| `auth.oidc.introspect.client.secret` | string | `nil` | OIDC introspect client secret |
 | `auth.oidc.introspect.enabled` | bool | `true` | Enable OIDC introspect |
-| `auth.oidc.introspect.endpoint` | string | `"https://example.com/auth/realms/timed/protocol/openid-connect/token/introspect"` | OIDC introspect endpoint |
-| `auth.oidc.userinfoEndpoint` | string | `"https://example.com/auth/realms/timed/protocol/openid-connect/userinfo"` | OIDC user endpoint url |
+| `auth.oidc.introspect.endpoint` | string | `nil` | OIDC introspect endpoint |
+| `auth.oidc.signAlgorithm` | string | `"RS256"` | Algorithm the OIDC provider uses to sign ID tokens |
+| `auth.oidc.url` | string | `"https://example.com/auth/realms/timed/protocol/openid-connect"` |  |
+| `auth.oidc.verifySSL` | string | `"True"` | OIDC verify SSL |
 | `backend.cronjobs.notifyChangedEmployments` | object | `{"command":["./manage.py","notify_changed_employments"],"schedule":"0 2 * * 1"}` | Notify changed employments |
 | `backend.cronjobs.notifyReviewersFirst` | object | `{"command":["./manage.py","notify_reviewers_unverified","--offset","5"],"schedule":"0 8 4 * *"}` | Notify reviewers first stage |
 | `backend.cronjobs.notifyReviewersFirst.command[3]` | string | `"5"` | Period will end today minus given offset |
@@ -71,6 +80,7 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | `backend.service.internalPort` | int | `80` | Internal Port of backend service |
 | `backend.service.name` | string | `"timed-backend"` | Backend service name |
 | `backend.service.type` | string | `"ClusterIP"` | Backend service type |
+| `backend.settings.admins` | list | `[]` | Django administrators, example: Jon Doe <jon.doe@example.com> |
 | `backend.settings.emailFrom` | string | `"webmaster@chart-example.local"` | Default email address to use for various responses |
 | `backend.settings.emailUrl` | string | `"smtp://localhost:25"` | Connection string of SMTP server to send mails |
 | `backend.settings.serverEmail` | string | `"webmaster@chart-example.local"` | Email address error messages are sent from |
@@ -80,7 +90,7 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | `backend.settings.workReportPath` | string | `"/etc/workreport"` | Path where the workreport shall be loaded from. The contents of the default path is filled from `configmap-workreport.yaml`. |
 | `frontend.image.pullPolicy` | string | `"IfNotPresent"` | Frontend image pull policy |
 | `frontend.image.repository` | string | `"adfinissygroup/timed-frontend"` | Frontend image name |
-| `frontend.image.tag` | string | `"v1.0-rc1"` | Frontend image tag |
+| `frontend.image.tag` | string | `"v1.1.0"` | Frontend image tag |
 | `frontend.livenessProbe.enabled` | bool | `true` | Enable liveness probe on frontend |
 | `frontend.livenessProbe.failureThreshold` | int | `6` | Number of tries to perform the probe |
 | `frontend.livenessProbe.initialDelaySeconds` | int | `60` | Number of seconds after the container has started before liveness probe is initiated |
@@ -104,9 +114,19 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | `ingress.hosts` | list | `[]` | Ingress hostnames |
 | `ingress.tls` | list | `[]` | Ingress TLS options |
 | `postgresql.enabled` | bool | `true` | Enable PostgreSQL for persistence |
-| `postgresql.image.tag` | string | `"12.2.0"` | PostgreSQL image version to use |
+| `postgresql.image.tag` | string | `"12.3.0"` | PostgreSQL image version to use |
+| `postgresql.ingress.enabled` | bool | `false` | Enable ingress |
+| `postgresql.ingress.loadBalancerSourceRanges` | list | `[]` | Whitelist specific IP ranges |
+| `postgresql.ingress.selector` | object | `{"app.kubernetes.io/name":"postgresql","role":"slave"}` | Service selector labels |
 | `postgresql.postgresqlDatabase` | string | `"timed"` | PostgreSQL database name |
 | `postgresql.postgresqlUsername` | string | `"postgres"` | PostgreSQL user name |
+| `postgresql.tls.certFilename` | string | `"tls.crt"` | Cert file name |
+| `postgresql.tls.certKeyFilename` | string | `"tls.key"` | Cert key filename |
+| `postgresql.tls.certificate.dnsNames` | list | `[]` | DNS names of certificate |
+| `postgresql.tls.certificate.issuerRef` | object | cert-manager | Issuer ref |
+| `postgresql.tls.certificate.name` | string | `"psql-server"` | Name of certificate |
+| `postgresql.tls.certificatesSecret` | string | `"psql-server"` | Name of TLS secret |
+| `postgresql.tls.enabled` | bool | `false` | Enable TLS for Postgresql |
 | `redmine.apiKey` | string | `""` | Redmine API Key |
 | `redmine.enabled` | bool | `false` | Enable Redmine integration |
 | `redmine.htaccessPassword` | string | `""` | Redmine htaccess password |

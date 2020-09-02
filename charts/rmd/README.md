@@ -2,7 +2,7 @@ rmd
 ===
 Chart for Rmd.io application
 
-Current chart version is `0.1.0`
+Current chart version is `0.1.1`
 
 
 **Homepage:** <https://github.com/adfinis-sygroup/rmd.io>
@@ -42,7 +42,7 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | `rmd.cronjobs.importMails.schedule` | string | `"0 * * * *"` | when to import mails |
 | `rmd.cronjobs.sendMails.command[0]` | string | `"app/manage.py"` |  |
 | `rmd.cronjobs.sendMails.command[1]` | string | `"sendmail"` |  |
-| `rmd.cronjobs.sendMails.schedule` | string | `"10 * * * *"` | when to send mails |
+| `rmd.cronjobs.sendMails.schedule` | string | `"5 * * * *"` | when to send mails |
 | `rmd.image.pullPolicy` | string | `"IfNotPresent"` | Rmd image pull policy |
 | `rmd.image.repository` | string | `"adfinissygroup/rmd"` | Rmd image name |
 | `rmd.image.tag` | string | appVersion from Chart.yaml | Specify a tag to override which version of rmd to deploy. |

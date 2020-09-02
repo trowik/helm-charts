@@ -79,7 +79,7 @@ rmd:
         - "import"
     sendMails:
       # rmd.cronjobs.sendMails.schedule -- when to send mails
-      schedule: "10 * * * *"
+      schedule: "5 * * * *"
       command:
         - "app/manage.py"
         - "sendmail"
